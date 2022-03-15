@@ -25,7 +25,7 @@ export const theme = createTheme({
     MuiButton: {
       styleOverrides: {
         root: {
-          width: 800,
+          width: 200,
         },
       },
     },
