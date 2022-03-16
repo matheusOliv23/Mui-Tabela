@@ -1,4 +1,3 @@
-import { Button, Grid, Typography } from "@mui/material";
 import Head from "next/head";
 import React from "react";
 import MiniDrawer from "../../src/components/Layout/Menu";
@@ -17,10 +16,18 @@ export default function Usuarios() {
       </Head>
 
       <MiniDrawer>
-        <Grid container direction="column" gap={6}>
-          <ListaFuncionarios />
-        </Grid>
+        <ListaFuncionarios />
       </MiniDrawer>
     </div>
   );
 }
+
+// export const getStaticProps: GetStaticProps = async () => {
+//   const { data } = await axios.get("https://nestjsmongo.herokuapp.com/users");
+//   const funcionarios = data
+//   return {
+//     props: {
+//       funcionarios,
+//     },
+//   };
+// };
