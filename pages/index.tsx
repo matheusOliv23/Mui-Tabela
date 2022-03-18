@@ -3,7 +3,7 @@ import MiniDrawer from "../src/components/Layout/Menu";
 
 export default function Home() {
   return (
-    <div>
+    <div style={{ background: "#261C2C", fontFamily: "Roboto, sans-serif" }}>
       <Head>
         <title>Template</title>
         <meta name="description" content="Digite aqui uma breve descrição" />

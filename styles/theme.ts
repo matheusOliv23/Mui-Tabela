@@ -4,7 +4,7 @@ import { createTheme } from "@mui/material";
 export const theme = createTheme({
   palette: {
     primary: {
-      main: "#f00",
+      main: "#1A1A40",
     },
     secondary: {
       main: "#0f0",
@@ -13,7 +13,7 @@ export const theme = createTheme({
   typography: {
     fontFamily: "Roboto",
     body2: {
-      fontFamily: "Times New Roman",
+      fontFamily: "Roboto",
       fontSize: "1.1rem",
     },
   },
@@ -26,6 +26,20 @@ export const theme = createTheme({
       styleOverrides: {
         root: {
           width: 200,
+        },
+      },
+    },
+    MuiTableCell: {
+      styleOverrides: {
+        body: {
+          cursor: "pointer",
+        },
+      },
+    },
+    MuiTableRow: {
+      styleOverrides: {
+        hover: {
+          backgroundColor: "#0f0",
         },
       },
     },

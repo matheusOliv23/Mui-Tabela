@@ -3,7 +3,7 @@ import React from "react";
 import MiniDrawer from "../../src/components/Layout/Menu";
 import ListaFuncionarios from "../../src/components/ListaFuncionarios";
 
-export default function Usuarios() {
+export default function Funcionarios() {
   return (
     <div>
       <Head>
