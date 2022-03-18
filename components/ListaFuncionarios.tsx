@@ -29,7 +29,7 @@ import { api } from "../src/services/api";
 import DialogoConfirma from "./DialogoConfirma";
 import EditarFuncionario from "./Edit";
 import * as Yup from "yup";
-import { Formik } from "formik";
+import { Form, Formik } from "formik";
 
 const cadastroSchema = Yup.object().shape({
   nome: Yup.string()
@@ -171,7 +171,6 @@ export default function ListaFuncionarios() {
 
   return (
     <Grid container direction="column">
-      {/* <MiniDrawer /> */}
       <Grid
         item
         style={{
@@ -191,7 +190,7 @@ export default function ListaFuncionarios() {
           <Dialog open={open}>
             <Formik
               initialValues={initialValues}
-              validade={cadastroSchema}
+              validationSchema={cadastroSchema}
               onSubmit={handleSubmit}
             >
               {({
@@ -203,7 +202,7 @@ export default function ListaFuncionarios() {
                 handleSubmit,
                 isSubmitting,
               }) => (
-                <form onSubmit={handleSubmit}>
+                <Form onSubmit={handleSubmit}>
                   <DialogTitle>Cadastro</DialogTitle>
                   <DialogContent>
                     <DialogContentText>
@@ -221,6 +220,8 @@ export default function ListaFuncionarios() {
                       variant="standard"
                       value={values.nome}
                       onChange={handleChange}
+                      error={touched.nome && Boolean(errors.nome)}
+                      helperText={touched.nome && errors.nome}
                     />
                     <TextField
                       autoFocus
@@ -233,6 +234,8 @@ export default function ListaFuncionarios() {
                       variant="standard"
                       value={values.email}
                       onChange={handleChange}
+                      error={touched.email && Boolean(errors.email)}
+                      helperText={touched.email && errors.email}
                     />
                   </DialogContent>
                   <DialogActions>
@@ -241,7 +244,7 @@ export default function ListaFuncionarios() {
                       Cadastrar funcionário
                     </Button>
                   </DialogActions>
-                </form>
+                </Form>
               )}
             </Formik>
           </Dialog>
