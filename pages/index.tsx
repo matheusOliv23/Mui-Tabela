@@ -1,5 +1,5 @@
 import Head from "next/head";
-import MiniDrawer from "../src/components/Layout/Menu";
+import MiniDrawer from "../components/Layout/Menu";
 
 export default function Home() {
   return (

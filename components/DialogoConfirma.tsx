@@ -9,7 +9,7 @@ import {
 import { TransitionProps } from "@mui/material/transitions";
 import React, { forwardRef, ReactNode } from "react";
 
-interface IConfirmationDialogProps {
+interface IConfirma {
   id: string;
   title: string;
   children: ReactNode;
@@ -21,7 +21,7 @@ interface IConfirmationDialogProps {
   onClose: (value?: string) => void;
 }
 
-export default function DialogoConfirma(props: IConfirmationDialogProps) {
+export default function DialogoConfirma(props: IConfirma) {
   const {
     children,
     open,

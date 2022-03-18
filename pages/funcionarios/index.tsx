@@ -1,7 +1,7 @@
 import Head from "next/head";
 import React from "react";
-import MiniDrawer from "../../src/components/Layout/Menu";
-import ListaFuncionarios from "../../src/components/ListaFuncionarios";
+import MiniDrawer from "../../components/Layout/Menu";
+import ListaFuncionarios from "../../components/ListaFuncionarios";
 
 export default function Funcionarios() {
   return (
