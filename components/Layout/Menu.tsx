@@ -144,7 +144,7 @@ export default function MiniDrawer({ children }: any) {
         <Divider />
         <List>
           {menu.map((text, index) => (
-            <Link href={text.rota}>
+            <Link href={text.rota} key={index}>
               <ListItemButton
                 sx={{
                   minHeight: 48,
