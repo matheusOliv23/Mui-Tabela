@@ -1,9 +1,36 @@
+import { GetServerSideProps } from "next";
 import Head from "next/head";
 import React from "react";
 import MiniDrawer from "../../components/Layout/Menu";
 import ListaFuncionarios from "../../components/ListaFuncionarios";
+import FuncionariosService from "../../src/services/FuncionariosService";
 
-export default function Funcionarios() {
+interface FuncionariosPageProps {
+  funcionariosProps: IFuncionarios[];
+  funcionarioId?: IFuncionarios;
+}
+
+export const getServerSideProps: GetServerSideProps<FuncionariosPageProps> =
+  async function ({ params }: any) {
+    const service = new FuncionariosService();
+    const funcionarios = await service.listar();
+
+    return {
+      props: { funcionariosProps: funcionarios },
+    };
+  };
+
+// export async function getServerSideProps({ params }: any) {
+//   const service = new FuncionariosService();
+//   const funcionarioId = await service.buscar(params._id);
+
+//   return {
+//     props: { funcionarioId },
+//   };
+// }
+export default function Funcionarios({
+  funcionariosProps,
+}: FuncionariosPageProps) {
   return (
     <div>
       <Head>
@@ -16,7 +43,7 @@ export default function Funcionarios() {
       </Head>
 
       <MiniDrawer>
-        <ListaFuncionarios />
+        <ListaFuncionarios funcionariosProps={funcionariosProps} />
       </MiniDrawer>
     </div>
   );

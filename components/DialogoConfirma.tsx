@@ -18,7 +18,8 @@ interface IConfirma {
   open: boolean;
   cancelButtonText?: string;
   confirmButtonText?: string;
-  onClose: (value?: string) => void;
+  onClose: any;
+  // onClose: (value?: string) => void;
 }
 
 export default function DialogoConfirma(props: IConfirma) {

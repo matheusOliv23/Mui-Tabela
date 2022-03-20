@@ -3,10 +3,6 @@ import {
   Grid,
   Button,
   Typography,
-  createStyles,
-  makeStyles,
-  Theme,
-  styled,
   IconButton,
   TableContainer,
   Paper,
@@ -23,13 +19,14 @@ import {
   DialogActions,
   DialogContentText,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { theme } from "../styles/theme";
 import { api } from "../src/services/api";
 import DialogoConfirma from "./DialogoConfirma";
 import EditarFuncionario from "./Edit";
 import * as Yup from "yup";
 import { Form, Formik } from "formik";
+import Link from "next/link";
 
 const cadastroSchema = Yup.object().shape({
   nome: Yup.string()
@@ -54,8 +51,10 @@ interface ValoresCadastro {
   email: string;
 }
 
-export default function ListaFuncionarios() {
-  const [funcionarios, setFuncionarios] = useState<IFuncionarios[]>([]);
+export default function ListaFuncionarios({
+  funcionariosProps,
+}: FuncionariosPageProps) {
+  const [funcionarios, setFuncionarios] = useState(funcionariosProps);
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -78,22 +77,24 @@ export default function ListaFuncionarios() {
 
   const handleDeleteCallBack = (value: any) => {
     const { itemId } = deleteOptions;
-
     setDeleteOptions({ show: false, itemId: null, itemDescription: null });
+    const deletarId = funcionarios.filter(
+      (conteudo) => conteudo._id !== itemId
+    );
 
     if (value === "ok") {
-      const deletarId = funcionarios.filter(
-        (conteudo) => conteudo._id !== itemId
-      );
       setFuncionarios(deletarId);
-      setMessageInfo({ show: true, message: "Item excluído com sucesso" });
+      setMessageInfo({
+        show: true,
+        message: "Item excluído com sucesso",
+      });
     }
   };
 
   const handleEditCallback = (value: any) => {
     const { itemId } = editOptions;
 
-    setEditOptions({ show: false, itemId: null });
+    setEditOptions({ show: false, itemId: null, itemDescription: null });
 
     if (value === "ok") {
       setMessageInfo({ show: true, message: "Item editado com sucesso" });
@@ -119,18 +120,6 @@ export default function ListaFuncionarios() {
     setOpen(false);
   };
 
-  useEffect(() => {
-    setLoading(true);
-    api
-      .get("/users?_order=asc&_sort=nome")
-      .then((response) => setFuncionarios(response.data))
-      .catch((error) => console.log(error))
-      .finally(() => {
-        setLoading(false);
-      });
-  }, []);
-  // if (loading) return <>{"carregando"}</>;
-
   function handleDelete({ _id, nome }: IFuncionarios) {
     api.delete(`/users/${_id}`).then(() => {
       setDeleteOptions({
@@ -142,12 +131,10 @@ export default function ListaFuncionarios() {
   }
 
   function handlEdit({ _id, nome }: IFuncionarios) {
-    api.patch(`/users/${_id}`).then(() => {
-      setEditOptions({
-        show: true,
-        itemId: _id,
-        itemDescription: nome,
-      });
+    setEditOptions({
+      show: true,
+      itemId: _id,
+      itemDescription: nome,
     });
   }
 
@@ -166,8 +153,6 @@ export default function ListaFuncionarios() {
         setMessageInfo({ show: true, message: "Funcionário cadastrado" });
       });
   };
-
-  console.log(initialValues);
 
   return (
     <Grid container direction="column">
@@ -282,10 +267,11 @@ export default function ListaFuncionarios() {
                   >
                     <Delete />
                   </IconButton>
-                  {/* <Link
-                    href={`/funcionarios/editarFuncionario/${funcionario._id}`}
-                    passHref
-                  ></Link> */}
+                  {/* <Link href={`/funcionarios/${funcionario._id}`} passHref>
+                    <IconButton aria-label="edit">
+                      <Edit />
+                    </IconButton>
+                  </Link> */}
                   <IconButton
                     aria-label="edit"
                     onClick={() => handlEdit(funcionario)}
@@ -307,8 +293,7 @@ export default function ListaFuncionarios() {
         open={deleteOptions.show}
         onClose={handleDeleteCallBack}
       >
-        Deseja excluir esse funcionário?{" "}
-        <strong>{deleteOptions.itemDescription}</strong>
+        Deseja excluir o <strong>{deleteOptions.itemDescription}</strong> ?
       </DialogoConfirma>
 
       <EditarFuncionario
@@ -318,14 +303,17 @@ export default function ListaFuncionarios() {
         keepMounted
         open={editOptions.show}
         onClose={handleEditCallback}
+        onClick={handleEditCallback}
+        handleClose={handleClose}
+        handleSubmit={handleSubmit}
       >
-        Deseja editar esse funcionário?{" "}
-        <strong>{editOptions.itemDescription}</strong>
+        Deseja editar as informações do funcionário{" "}
+        <strong>{editOptions.itemDescription}</strong> ?
       </EditarFuncionario>
 
       <Snackbar
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
-        autoHideDuration={3000}
+        autoHideDuration={2000}
         open={messageInfo.show}
         message={messageInfo.message}
         key={messageInfo.message}

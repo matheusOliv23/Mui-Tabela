@@ -18,6 +18,8 @@ import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import { ReactNode } from "react";
+import { Face } from "@mui/icons-material";
+import Link from "next/link";
 
 const drawerWidth = 240;
 
@@ -90,6 +92,11 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
+const menu = [
+  { nome: "Home", rota: "/", icone: <InboxIcon /> },
+  { nome: "Funcionários", rota: "/funcionarios", icone: <Face /> },
+];
+
 export default function MiniDrawer({ children }: any) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -120,7 +127,7 @@ export default function MiniDrawer({ children }: any) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            Painel de usuários
+            Painel de funcionários
           </Typography>
         </Toolbar>
       </AppBar>
@@ -136,52 +143,33 @@ export default function MiniDrawer({ children }: any) {
         </DrawerHeader>
         <Divider />
         <List>
-          {["Home", "Contatos"].map((text, index) => (
-            <ListItemButton
-              key={text}
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}
-            >
-              <ListItemIcon
+          {menu.map((text, index) => (
+            <Link href={text.rota}>
+              <ListItemButton
                 sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
                 }}
               >
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-            </ListItemButton>
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
+                  {text.icone}
+                </ListItemIcon>
+                <ListItemText
+                  primary={text.nome}
+                  sx={{ opacity: open ? 1 : 0 }}
+                />
+              </ListItemButton>
+            </Link>
           ))}
         </List>
         <Divider />
-        <List>
-          {["All mail", "Trash", "Spam"].map((text, index) => (
-            <ListItemButton
-              key={text}
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}
-            >
-              <ListItemIcon
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
-                }}
-              >
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-            </ListItemButton>
-          ))}
-        </List>
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
