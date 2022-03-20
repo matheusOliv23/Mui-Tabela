@@ -1,5 +1,6 @@
 <h1 align="center">
-  <center>Nextjs, Typescript, Material Ui
+  <center>Painel simples de funcionários com Nextjs, Typescript e Material UI
+
 
 </center>
 </h1>

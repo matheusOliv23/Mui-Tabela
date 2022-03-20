@@ -318,6 +318,7 @@ export default function ListaFuncionarios({
         message={messageInfo.message}
         key={messageInfo.message}
         onClose={handleCloseMessage}
+        style={{ background: "green", color: "#fff" }}
       />
     </Grid>
   );
